@@ -13,4 +13,8 @@ func challengeFunction() {
 
 ## Screenshot of the App
 
-![homescreen](Assets/homescreen.png)
+![home screen](Assets/homescreen.png)
+
+## Gif
+
+![gif](Assets/app.gif)
