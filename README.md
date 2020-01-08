@@ -20,5 +20,5 @@ func challengeFunction() {
 
 ## Gif
 
-![gif](Assets/app.gif)
+![gif](Assets/BabelDemo.gif)
 
