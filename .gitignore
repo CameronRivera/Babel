@@ -88,3 +88,9 @@ fastlane/test_output
 # https://github.com/johnno1962/injectionforxcode
 
 iOSInjectionProject/
+
+# The .DS_Store gets created by macOS , should not be pushed to github, adding to .gitignore
+.DS_Store
+
+# Ignore Secrets folder from Xcode
+Secrets/
