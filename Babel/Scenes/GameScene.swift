@@ -227,7 +227,9 @@ class GameScene: SKScene{
                     spawnSoul()
                     upperText?.removeFromParent()
                     addSoul("Soul")
-                    createLowerLabel(LanguageData.shared.queryString)
+                    DispatchQueue.global().async{
+                        self.createLowerLabel(LanguageData.shared.queryString)
+                    }
                 } else if progress.contains(location) && SceneData.shared.phase == 2 {
                     SceneData.shared.phase = 1
                     createLabel("Oh right, they still maintain their native language until they move on. Let's see, this one seems to be speaking...")
@@ -279,13 +281,13 @@ class GameScene: SKScene{
     // MARK: Heaven, Hell, or Limbo
     private func heavenOrHellMove(_ judgement: String){
         if judgement.lowercased() == "hell"{
-            hellishDiplay()
-            ghost?.run(SKAction.sequence([
-                SKAction.move(to: CGPoint(x: size.width * 0.5 , y: size.height * -2.0), duration: 4.0),
-                SKAction.playSoundFileNamed("pacman dead.wav", waitForCompletion: true)
-                ]))
+            //hellishDiplay()
+            ghost?.run(
+                SKAction.move(to: CGPoint(x: size.width * 0.5 , y: size.height * -2.0), duration: 4.0))
+            ghost?.run(SKAction.playSoundFileNamed("pacman dead.wav", waitForCompletion: true)
+            )
         } else if judgement.lowercased() == "heaven" {
-            heavenDisplay()
+           // heavenDisplay()
             ghost?.run(SKAction.move(to: CGPoint(x: size.width * 0.5 , y: size.height * 2.0), duration: 4.0))
             ghost?.run(SKAction.playSoundFileNamed("HeavenlyChoirTrimmed.mp3", waitForCompletion: true))
         } else {
@@ -303,7 +305,7 @@ class GameScene: SKScene{
     private func transition(){
         removeAllChildren()
         SceneData.shared.upperText = upperText?.text ?? " "
-//        let reveal = SKTransition.reveal(with: .left, duration: 1.0)
+        //        let reveal = SKTransition.reveal(with: .left, duration: 1.0)
         TransitionManager.shared.transition(self, .questionScene, size)
     }
     
@@ -315,22 +317,22 @@ class GameScene: SKScene{
         rightAngel = SKSpriteNode(imageNamed: "angel02")
         rightAngel?.position = CGPoint(x: size.width * 0.9, y: size.height * 0.94)
         rightAngel?.size = CGSize(width: 60.0, height: 60.0)
-//        happyCloud = SKSpriteNode(imageNamed: "happyCloudTrimmed")
-//        happyCloud?.size = CGSize(width: 60.0, height: 60.0)
-//        happyCloud?.position = CGPoint(x: size.width * 0.5, y: size.height * 0.94)
+        //        happyCloud = SKSpriteNode(imageNamed: "happyCloudTrimmed")
+        //        happyCloud?.size = CGSize(width: 60.0, height: 60.0)
+        //        happyCloud?.position = CGPoint(x: size.width * 0.5, y: size.height * 0.94)
         
         addChild(leftAngel!)
         addChild(rightAngel!)
-//        addChild(happyCloud!)
+        //        addChild(happyCloud!)
     }
     
     // MARK: Places HellFire on the bottom of the screen
     private func hellishDiplay(){
-//        hellFire = SKSpriteNode(imageNamed: "firesOfHell")
-//        hellFire?.position = CGPoint(x: size.width * 0.5, y: size.height * 0.05)
-//        hellFire?.size = CGSize(width: size.width, height: 60.0)
-//
-//        addChild(hellFire!)
+        //        hellFire = SKSpriteNode(imageNamed: "firesOfHell")
+        //        hellFire?.position = CGPoint(x: size.width * 0.5, y: size.height * 0.05)
+        //        hellFire?.size = CGSize(width: size.width, height: 60.0)
+        //
+        //        addChild(hellFire!)
         leftDevil = SKSpriteNode(imageNamed: "devilBat")
         leftDevil?.position = CGPoint(x: size.width * 0.1, y: size.height * 0.05)
         leftDevil?.size = CGSize(width: 60.0, height: 60.0)
@@ -374,14 +376,13 @@ class GameScene: SKScene{
     
     // MARK: Set up for return from question Scene
     private func returnFromQuestionSceneSetUp(){
-//        LanguageData.shared.newQuery() FIND A BETTER PLACE FOR THIS
         createUpperTextbox()
         createLowerTextbox()
         addEnma("Enma")
         createButtonBox()
         addButton()
         guard let currentLanguage = SceneData.shared.usersChoice?.language else {
-                return
+            return
         }
         let lang = LanguageData.shared.allLanguages.filter{currentLanguage == $0.code}
         
